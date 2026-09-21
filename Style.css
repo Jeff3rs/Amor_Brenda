@@ -1,0 +1,232 @@
+:root {
+  --noche: #0b2a22;
+  --bosque: #12402f;
+  --pasto: #1a5a3b;
+  --suelo: #081f18;
+  --sol: #ffd21f;
+  --luz: #fff3b0;
+  --texto: #dcebd0;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+
+body {
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--texto);
+  background: var(--noche);
+}
+
+.stage {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(70vmax 70vmax at 90% 0%, rgba(255, 210, 31, .26), transparent 62%),
+    linear-gradient(180deg, var(--noche) 0%, var(--bosque) 65%, var(--pasto) 100%);
+}
+
+/* ---------- Texto ---------- */
+.intro {
+  position: relative;
+  z-index: 3;
+  max-width: 760px;
+  padding: clamp(24px, 5vw, 72px) clamp(20px, 5vw, 72px) 200px;
+}
+
+.fecha {
+  margin: 0 0 .6rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ffe98a;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 7.5vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: -.015em;
+  color: var(--sol);
+  text-wrap: balance;
+  max-width: 13ch;
+}
+
+.lead {
+  margin: 1.2rem 0 0;
+  max-width: 46ch;
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+/* ---------- Tarjeta ---------- */
+.card {
+  margin-top: 1.8rem;
+  max-width: 470px;
+  padding: 1.3rem 1.4rem 1.2rem;
+  background: rgba(8, 30, 23, .82);
+  border: 1px solid rgba(255, 210, 31, .35);
+  border-radius: 18px;
+  backdrop-filter: blur(6px);
+}
+
+.dedicatoria {
+  margin: 0 0 1.1rem;
+  min-height: 3.9em;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.35;
+  color: var(--luz);
+}
+
+.dedicatoria.cambia { animation: aparece .6s ease both; }
+@keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+
+.firma {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  color: #ffe98a;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.1rem;
+}
+
+button, .boton {
+  padding: .65rem 1.2rem;
+  font: inherit;
+  font-weight: 700;
+  color: #1d2a12;
+  text-decoration: none;
+  background: var(--sol);
+  border: 1px solid var(--sol);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+button:hover, .boton:hover { background: #ffe14d; }
+button:active, .boton:active { transform: scale(.97); }
+
+.fantasma {
+  color: #ffe98a;
+  background: transparent;
+  border-color: rgba(255, 210, 31, .5);
+}
+.fantasma:hover { background: rgba(255, 210, 31, .12); }
+
+:focus-visible {
+  outline: 3px solid var(--sol);
+  outline-offset: 2px;
+}
+
+.pista {
+  margin: .9rem 0 0;
+  font-size: .9rem;
+  color: #b9d1b0;
+}
+
+/* ---------- Jardín ---------- */
+.garden {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.flor {
+  position: absolute;
+  bottom: 0;
+}
+
+.brote {
+  transform-origin: 50% 100%;
+  animation: brotar 1.7s cubic-bezier(.2, .8, .2, 1) both;
+  animation-delay: var(--ret, 0s);
+}
+
+.mece {
+  transform-origin: 50% 100%;
+  animation: mecer var(--t, 5s) ease-in-out infinite alternate;
+  animation-delay: var(--ret2, 0s);
+}
+
+.flor svg { display: block; overflow: visible; }
+
+@keyframes brotar {
+  from { transform: scale(.04); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+@keyframes mecer {
+  from { transform: rotate(-1.8deg); }
+  to   { transform: rotate(1.8deg); }
+}
+
+.suelo {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 90px;
+  fill: var(--suelo);
+}
+
+/* ---------- Mariposas ---------- */
+.mariposa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: calc(30px * var(--escala, 1));
+  pointer-events: none;
+  animation: vuelo var(--dur, 30s) linear infinite;
+  animation-delay: var(--ret, 0s);
+}
+.mariposa.alterna { animation-name: vuelo-inverso; }
+
+.mariposa svg { display: block; width: 100%; }
+.mariposa path {
+  fill: var(--sol);
+  stroke: #c98a00;
+  stroke-width: .8;
+}
+.alas {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: aletear .32s ease-in-out infinite alternate;
+}
+
+@keyframes aletear { to { transform: scaleX(.3); } }
+
+@keyframes vuelo {
+  0%   { transform: translate(-8vw, 62vh); }
+  20%  { transform: translate(20vw, 44vh); }
+  45%  { transform: translate(48vw, 58vh); }
+  70%  { transform: translate(74vw, 36vh); }
+  100% { transform: translate(108vw, 50vh); }
+}
+@keyframes vuelo-inverso {
+  0%   { transform: translate(108vw, 28vh); }
+  25%  { transform: translate(78vw, 46vh); }
+  50%  { transform: translate(50vw, 30vh); }
+  75%  { transform: translate(24vw, 54vh); }
+  100% { transform: translate(-8vw, 40vh); }
+}
+
+/* ---------- Móvil ---------- */
+@media (max-width: 520px) {
+  .dedicatoria { font-size: 1.2rem; }
+}
+
+/* ---------- Menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .brote, .mece, .alas, .dedicatoria.cambia { animation: none; }
+  .mariposa { display: none; }
+}
